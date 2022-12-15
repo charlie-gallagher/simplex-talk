@@ -1,4 +1,5 @@
 import socket
+import sys
 
 def simple_local_client():
     with socket.create_connection((socket.gethostbyname('localhost'), 8000)) as client:
@@ -19,7 +20,7 @@ def simple_local_client():
         except KeyboardInterrupt:
             print(' Keyboard interrupt received. Exiting from client.')
 
-def manual_local_client():
+def manual_local_client(host='localhost'):
     # Steps:
     # 1. Create socket
     # 2. Bind socket to local network
@@ -34,9 +35,9 @@ def manual_local_client():
 
     # (host, port)
     # port=0 indicates "any free port". For the client, port doesn't matter.
-    sckt.bind(('localhost', 0))
+    sckt.bind(('', 0))
     # (host, port)
-    sckt.connect(('localhost', 8000))
+    sckt.connect((host, 8000))
 
     # Block until server confirms connection
     msg = sckt.recv(1024).decode()
@@ -58,4 +59,7 @@ def manual_local_client():
 
     
 if __name__=='__main__':
-    manual_local_client()
+    if len(sys.argv) != 2:
+        print('Usage: simplex_client <host>')
+    else:
+        manual_local_client(host=sys.argv[1])

@@ -46,7 +46,7 @@ def manual_local_server():
     # Bind
     srv_port = 8000
     log(f'Listening on port <{srv_port}>')
-    sckt.bind(('localhost', srv_port))
+    sckt.bind(('', srv_port))
 
     # Listen
     sckt.listen(5)
